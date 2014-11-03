@@ -1,0 +1,32 @@
+@(formItem:Form[_], fieldName: String, label: Html, args: (Symbol,Any)*)(implicit lang: play.api.i18n.Lang)
+
+@import uk.gov.hmrc.play.mappers.DateFields._
+@import play.api.i18n._
+@import uk.gov.hmrc.play.mappers.DateFormatSymbols._
+
+@dayElem = @{fieldName + "." + day}
+@dropdown(
+        formItem(dayElem),
+        ( 1 to 31) map {  i=> (i.toString, i.toString) },
+        displayEmptyValue = true,
+        '_label -> Messages("date.fields.day"),
+        '_labelClass -> "label--inlineDropdown form-field--inline",
+        '_emptyValueText -> " "
+)
+@monthElem = @{fieldName + "." + month}
+@dropdown(
+        formItem(monthElem),
+        monthsWithIndexes,
+        displayEmptyValue = true,
+        '_label -> Messages("date.fields.month"),
+        '_labelClass -> "label--inlineDropdown form-field--inline",
+        '_emptyValueText -> " "
+)
+@yearElem = @{fieldName + "." + year}
+@input(
+        formItem(yearElem),
+        '_label -> Messages("date.fields.year"),
+        '_labelClass -> "label--inlineTextinput form-field--inline-text-input",
+        '_inputClass -> "input--xsmall",
+        '_emptyValueText -> " "
+)
